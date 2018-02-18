@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 
-
-
 public class ShipController : MonoBehaviour {
 	
 	public GameObject Projectile;
 	public AudioClip FireLaser;
-	public float Type;
+	public int Type;
 	public float Life = 1000;
 	public int Speed = 5;
 	
@@ -29,11 +27,7 @@ public class ShipController : MonoBehaviour {
 
 	private void Update () {
 		//determine if _boost
-		if (Input.GetKey(KeyCode.LeftShift)) {
-			_boost = 2;
-		} else {
-			_boost = 1;
-		}
+		_boost = (Input.GetKey(KeyCode.LeftShift)) ? 2 : 1;
 		
 		//control power of ship
 		if (Input.GetKey(KeyCode.UpArrow)) { //up
@@ -63,12 +57,8 @@ public class ShipController : MonoBehaviour {
 	}
 	
 	private void LaunchProjectile() {
-		var laser1 = Instantiate(Projectile, transform.position, Quaternion.identity);
-		var laser2 = Instantiate(Projectile, transform.position, Quaternion.identity);
-		var laser3 = Instantiate(Projectile, transform.position, Quaternion.identity);
-		laser1.GetComponent<Projectile>().birthDirection = new Vector2(0, 1);
-		laser2.GetComponent<Projectile>().birthDirection = new Vector2(0, 1);
-		laser3.GetComponent<Projectile>().birthDirection = new Vector2(0, 1);
+		var laser = Instantiate(Projectile, transform.position, Quaternion.identity);
+		laser.GetComponent<Projectile>().BirthDirection = new Vector2(0, 1);
 		AudioSource.PlayClipAtPoint(FireLaser, transform.position);
 	}
 	

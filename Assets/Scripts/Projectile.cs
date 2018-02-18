@@ -1,35 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 	
-	public float ProjectileType;
-	public float damage = 10;
-	public float projectileSpeed = 25f;
-	public Vector2 birthDirection;
+	public int ProjectileType;
+	public float Damage = 10;
+	public float ProjectileSpeed = 25f;
+	public Vector2 BirthDirection;
 
-	// Use this for initialization
-	void Start () {
-		//birthDirection = new Vector2(0 , 1);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		transform.Translate(birthDirection * Time.deltaTime * projectileSpeed);
+	private void Update () {
+		transform.Translate(BirthDirection * Time.deltaTime * ProjectileSpeed);
 		Destroy(gameObject, 2.0f);
 	}
 	
-	public float Hit (float type) {
+	public void Hit (int type) {
+		//eventually be able to determine if projectile is destroyed when it collides based on what it hit
+		//for now projectile is destroyed no matter what if it receives Hit()
+		Debug.Log(string.Format("Type of object hit: {0}, determine if projectile should be destroyed", type));
 		Destroy(gameObject);
-		if(gameObject == null){
-			return 1;
-		}else{
-			return 0;
-		}
 	}
 	
-	public float GetDamage (float type) {
-		return damage;
+	public float GetDamage (int type)
+	{
+		//in the future I will be able to calculate damage based on the type of object that the projectile hit.
+		Debug.Log(string.Format("Type of object hit: {0}", type));
+		return Damage;
 	}
 }

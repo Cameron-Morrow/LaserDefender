@@ -4,7 +4,7 @@ public class Enemy : MonoBehaviour {
 	
 	public GameObject Projectile;
 	public float Life = 100f;
-	public float Type = 4.0f;
+	public int Type = 4;
 	public float ShotsPerSecond = 0.5f;
 	
 	private void Update () {
@@ -27,6 +27,6 @@ public class Enemy : MonoBehaviour {
 	
 	private void LaunchProjectile() {
 		var laser = Instantiate(Projectile, transform.position, Quaternion.identity);
-		laser.GetComponent<Projectile>().birthDirection = new Vector2(0, -1);
+		laser.GetComponent<Projectile>().BirthDirection = new Vector2(0, -1);
 	}
 }
