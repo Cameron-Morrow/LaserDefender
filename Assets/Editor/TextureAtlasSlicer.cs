@@ -46,7 +46,7 @@ public class TextureAtlasSlicer : EditorWindow {
 
 
 
-        //valid only if the texture type is 'sprite' or 'advanced'.
+        //valid only if the texture Type is 'sprite' or 'advanced'.
 
         return textureImporter && textureImporter.textureType == TextureImporterType.Sprite ||
 
@@ -170,9 +170,9 @@ public class TextureAtlasSlicer : EditorWindow {
 
                     try {
 
-                        int width = Convert.ToInt32(childNode.Attributes["width"].Value);
+                        int width = Convert.ToInt32(childNode.Attributes["Width"].Value);
 
-                        int height = Convert.ToInt32(childNode.Attributes["height"].Value);
+                        int height = Convert.ToInt32(childNode.Attributes["Height"].Value);
 
                         int x = Convert.ToInt32(childNode.Attributes["x"].Value);
 

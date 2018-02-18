@@ -1,51 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FormationController : MonoBehaviour {
-	public GameObject enemyPrefab4;
+	public GameObject EnemyPrefab4;
 	
-	public float width;
-	public float height;
-	public float speed = 3.0f;
-	public float spawnDelay = 0.5f;
+	public float Width;
+	public float Height;
+	public float Speed = 3.0f;
+	public float SpawnDelay = 0.5f;
 	
-	float Xpadding;
-	float xmin;
-	float xmax;
-	float ymin;
-	float ymax;
-	float leftEdge;
-	float rightEdge;
+	private float _xpadding;
+	private float _xmin;
+	private float _xmax;
+	private float _ymin;
+	private float _ymax;
+	private float _leftEdge;
+	private float _rightEdge;
 	
-	string direction = "right";
+	private string _direction = "right";
 
-	// Use this for initialization
-	void Start () {
-		Xpadding =  width / 2;
+	private void Start () {
+		_xpadding =  Width / 2;
 		
-		float distance = transform.position.z - Camera.main.transform.position.z;
-		Vector3 cameraMin = Camera.main.ViewportToWorldPoint(new Vector3(0,0,distance));
-		Vector3 cameraMax = Camera.main.ViewportToWorldPoint(new Vector3(1,1,distance));
-		xmin = cameraMin.x;
-		xmax = cameraMax.x;
-		//ymin = cameraMin.y + padding;
-		//ymax = cameraMax.y - padding;
-		leftEdge = -Xpadding;
-		rightEdge = Xpadding;
+		var distance = transform.position.z - Camera.main.transform.position.z;
+		var cameraMin = Camera.main.ViewportToWorldPoint(new Vector3(0,0,distance));
+		var cameraMax = Camera.main.ViewportToWorldPoint(new Vector3(1,1,distance));
+		_xmin = cameraMin.x;
+		_xmax = cameraMax.x;
+		//_ymin = cameraMin.y + padding;
+		//_ymax = cameraMax.y - padding;
+		_leftEdge = -_xpadding;
+		_rightEdge = _xpadding;
 		SpawnUntilFull();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		Xpadding =  width / 2;
+	private void Update () {
+		_xpadding =  Width / 2;
 		/*float checker = -1000000;
 		foreach ( Transform child in transform ) {
 			if(child.transform.position.x >= checker){
 				checker = child.transform.position.x;
 			}
 		}
-		rightEdge = (checker) + transform.position.x;
+		_rightEdge = (checker) + transform.position.x;
 		//Debug.Log(checker);
 		checker = 10000000;
 		foreach ( Transform child in transform ) {
@@ -53,27 +49,32 @@ public class FormationController : MonoBehaviour {
 				checker = child.transform.position.x;
 			}
 		}
-		leftEdge = (checker) - transform.position.x;
+		_leftEdge = (checker) - transform.position.x;
 		//Debug.Log(checker);*/
-		leftEdge = transform.position.x - Xpadding;
-		rightEdge = transform.position.x + Xpadding;
+		_leftEdge = transform.position.x - _xpadding;
+		_rightEdge = transform.position.x + _xpadding;
 		
-		if(direction == "right"){
-			transform.Translate(Vector2.right * Time.deltaTime * speed);
-		}
-		if(direction == "left"){
-			transform.Translate(Vector2.left * Time.deltaTime * speed);
+		switch (_direction)
+		{
+			case "right":
+				transform.Translate(Vector2.right * Time.deltaTime * Speed);
+				break;
+			case "left":
+				transform.Translate(Vector2.left * Time.deltaTime * Speed);
+				break;
+			default:
+				break;
 		}
 		
-		float newX = Mathf.Clamp(transform.position.x, xmin, xmax);
-		//float newY = Mathf.Clamp(transform.position.y, ymin, ymax);
+		var newX = Mathf.Clamp(transform.position.x, _xmin, _xmax);
+		//float newY = Mathf.Clamp(transform.position.y, _ymin, _ymax);
 		transform.position = new Vector2 (newX, transform.position.y);
 		
-		if(leftEdge <= xmin){
-			direction = "right";
+		if(_leftEdge <= _xmin){
+			_direction = "right";
 		}
-		if(rightEdge >= xmax){
-			direction = "left";
+		if(_rightEdge >= _xmax){
+			_direction = "left";
 		}
 		
 		if(AllDead()){
@@ -81,10 +82,10 @@ public class FormationController : MonoBehaviour {
 		}
 	}
 	
-	void OnDrawGizmos () {
-		Gizmos.DrawWireCube(transform.position, new Vector3(width, height, 0));
+	private void OnDrawGizmos () {
+		Gizmos.DrawWireCube(transform.position, new Vector3(Width, Height, 0));
 	}
-	bool AllDead () {
+	private bool AllDead () {
 		foreach ( Transform childPositionGameObject in transform ) {
 			if (childPositionGameObject.childCount > 0){
 				return false;
@@ -93,10 +94,10 @@ public class FormationController : MonoBehaviour {
 		return true;
 	}
 	
-	bool Spawn () {
+	private bool Spawn () {
 		foreach ( Transform child in transform ) {
 			if (child.childCount <= 0){
-				GameObject enemy = Instantiate(enemyPrefab4, child.transform.position, Quaternion.identity) as GameObject;
+				var enemy = Instantiate(EnemyPrefab4, child.transform.position, Quaternion.identity);
 				enemy.transform.parent = child;
 			}
 		}
@@ -108,18 +109,18 @@ public class FormationController : MonoBehaviour {
 		
 	}
 	
-	void SpawnUntilFull () {
-		Transform freePosition = NextFreePosition();
+	private void SpawnUntilFull () {
+		var freePosition = NextFreePosition();
 		if (freePosition != null){
-			GameObject enemy = Instantiate(enemyPrefab4, freePosition.position, Quaternion.identity) as GameObject;
+			var enemy = Instantiate(EnemyPrefab4, freePosition.position, Quaternion.identity);
 			enemy.transform.parent = freePosition;
 		}
 		if (NextFreePosition()) {
-			Invoke("SpawnUntilFull", spawnDelay);
+			Invoke("SpawnUntilFull", SpawnDelay);
 		}
 	}
 	
-	Transform NextFreePosition () {
+	private Transform NextFreePosition () {
 		foreach ( Transform childPositionGameObject in transform ) {
 			if (childPositionGameObject.childCount <= 0){
 				return childPositionGameObject;
