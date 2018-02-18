@@ -1,34 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 	
-	public GameObject projectile;
-	public float life = 100f;
-	public float type = 4.0f;
-	public float shotsPerSecond = 0.5f;
+	public GameObject Projectile;
+	public float Life = 100f;
+	public float Type = 4.0f;
+	public float ShotsPerSecond = 0.5f;
 	
-	void Update () {
-		float probability = Time.deltaTime * shotsPerSecond;
+	private void Update () {
+		var probability = Time.deltaTime * ShotsPerSecond;
 		if(Random.value < probability){
 			LaunchProjectile();
 		}
 	}
 
-	void OnTriggerEnter2D (Collider2D col){
-		if(col.GetComponent<Projectile>() != null && col.GetComponent<Projectile>().ProjectileType != 4.0f){
-			col.GetComponent<Projectile>().Hit(type);
-			life = life - col.GetComponent<Projectile>().GetDamage(type);
+	private void OnTriggerEnter2D (Collider2D col){
+		if(col.GetComponent<Projectile>() != null && col.GetComponent<Projectile>().ProjectileType != Type){
+			col.GetComponent<Projectile>().Hit(Type);
+			Life = Life - col.GetComponent<Projectile>().GetDamage(Type);
 		}
 		
-		if (life <= 0) {
+		if (Life <= 0) {
 			Destroy(gameObject);
 		}
 	}
 	
-	void LaunchProjectile() {
-		GameObject laser = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
+	private void LaunchProjectile() {
+		var laser = Instantiate(Projectile, transform.position, Quaternion.identity);
 		laser.GetComponent<Projectile>().birthDirection = new Vector2(0, -1);
 	}
 }

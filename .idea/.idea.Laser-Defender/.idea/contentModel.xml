@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\cmorrow\.Rider2017.3\system\resharper-host\local\Transient\ReSharperHost\v11\SolutionCaches\_Laser-Defender.456775303.00" t="ExcludeRecursive" />
+    <e p="C:\Users\cmorrow\RiderProjects\LaserDefender2" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Editor" t="Include">
+          <e p="TextureAtlasSlicer.cs" t="Include" />
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Enemy.cs" t="Include" />
+          <e p="EnemySpawner.cs" t="Include" />
+          <e p="FormationController.cs" t="Include" />
+          <e p="LookAtMouse.cs" t="Include" />
+          <e p="Position.cs" t="Include" />
+          <e p="Projectile.cs" t="Include" />
+          <e p="ShipController.cs" t="Include" />
+        </e>
+        <e p="Sprites" t="Include">
+          <e p="sheet.xml" t="Include" />
+          <e p="spaceShooter2_spritesheet.xml" t="Include" />
+          <e p="uipackSpace_sheet.xml" t="Include" />
+        </e>
+      </e>
+      <e p="Laser-Defender.sln" t="IncludeFlat" />
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
